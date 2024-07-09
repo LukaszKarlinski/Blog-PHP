@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         //save user into database
         require_once './functions/setUser.php';
-        setUser($pdo, $username, $pasword, $email);
+        setUser($pdo, $username, $password, $email);
 
         header("Location: ../../signUp.php?signup=success");
 
