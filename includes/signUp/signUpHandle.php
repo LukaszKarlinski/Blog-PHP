@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         if($errors){
             $_SESSION['errorsSignUp'] = $errors;
-            header('Location: ../../pages/signUp.php');
+            header('Location: ../../signUp.php');
             die();
         }
 
@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         require_once './functions/setUser.php';
         setUser($pdo, $username, $pasword, $email);
 
-        header("Location: ../../pages/signUp.php?signup=success");
+        header("Location: ../../signUp.php?signup=success");
 
         //clear connection
         $pdo = null;
@@ -59,6 +59,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 }
 else{
-    header('Location: ../index.php');
+    header('Location: ../../index.php');
 }
 
