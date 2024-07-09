@@ -1,5 +1,6 @@
 <?php 
     require_once 'includes/configSession.php';
+    require_once 'includes/addArticle/functions/checkErrorsAddArticle.php';
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +22,7 @@
                 <div class='w-1/2 bg-neutral-200 text-neutral-900 p-5 rounded-xl'>
                     <h2 class='uppercase font-bold'>dodaj nowy wpis</h2>
                     <div>
-                        <form action="inludes/addArticleHandle.php" method='post' class='flex flex-col'>
+                        <form action="includes/addArticle/addArticleHandle.php" method='post' class='flex flex-col'>
                             <div class='flex flex-col my-3'>
                                 <label for="title" class='font-semibold capitalize my-1'>tytuł</label>
                                 <input type="text" name='title' class='outline-0 bg-neutral-100 text-neutral-900 rounded-xl py-1 px-2 ring-neutral-300 focus:ring-2'>
@@ -30,6 +31,7 @@
                                 <label for="content" class='font-semibold capitalize my-1'>treść</label>
                                 <textarea name="content" rows='12' class='resize-none outline-0 bg-neutral-100 text-neutral-900 rounded-xl py-1 px-2 ring-neutral-300 focus:ring-2'></textarea>
                             </div>
+                            <?php checkAddArticleErrors(); ?>
                             <button class='w-fit px-4 py-2 bg-neutral-900 text-neutral-200 rounded-md uppercase text-sm font-semibold tracking-wide ml-auto'>dodaj wpis</button>
                         </form>
                     </div>
