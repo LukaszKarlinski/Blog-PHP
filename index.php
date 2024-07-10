@@ -21,5 +21,7 @@
             </div>
         </div>
     </div>
+
+    <script src='assets/js/deleteArticle.js'></script>
 </body>
 </html>
