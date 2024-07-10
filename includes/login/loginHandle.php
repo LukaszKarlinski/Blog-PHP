@@ -43,6 +43,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         //set user data in session
         $_SESSION['userId'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
 
         header('Location: ../../login.php?login=success');
 
