@@ -5,9 +5,19 @@ function showAllArticles($pdo){
     require_once 'getAllArticles.php';
     $articles = getAllArticles($pdo);
 
+
+    //get all user likes
+    $likes = [];
+    if(isset($_SESSION['userId'])){
+        $userId = $_SESSION['userId'];
+        require_once 'includes/like/functions/getLikesByUserId.php';
+        $likes = getLikesByUserId($pdo, $userId);
+    }
+
     //print all articles
     foreach($articles as $article){
 
+        
         //get data about article
         $id = $article['id'];
         $title = htmlspecialchars($article['title']);
@@ -15,10 +25,26 @@ function showAllArticles($pdo){
         $formateDate = date('d-m-Y', strtotime($date));
         $content = htmlspecialchars($article['content']);
 
+        //check number of article likes
+        require_once 'includes/like/functions/getLikesCountByArticle.php';
+        $likesAmount = getLikesCountByArticle($pdo, $id);
+        
+
+        //check if user liked this article
+        $liked = false;
+        if(isset($userId)){
+            foreach($likes as $like){
+                if($like['article_id']=== $id){
+                    $liked = true;
+                }
+            }
+        }
+
         //print article
-        echo "<div class='relative bg-neutral-200 text-neutral-900 rounded-xl p-5'>";
+        echo "<div class='relative bg-neutral-200 text-neutral-900 rounded-xl p-5 pb-2'>";
         //delete article option if user is admin
         if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'){
+            //x icon
             echo '<div class="showDeletePopup absolute top-4 right-4 cursor-pointer"> 
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -26,6 +52,7 @@ function showAllArticles($pdo){
                     <path d="M6 6l12 12" />
                     </svg> 
                 </div>';
+            //delete article popup
             echo "<div class='deletePopup hidden absolute inset-0 flex justify-center items-center bg-neutral-900/70'>
                     <div class='bg-neutral-900 text-neutral-200 h-fit p-5 rounded-xl'>
                         <h2> Czy na pewno chcesz usunąć ten wpis?</h2>
@@ -36,9 +63,22 @@ function showAllArticles($pdo){
                     </div>
                 </div>";
         }
+
+        //print article data
         echo   "<h1 class='text-2xl font-bold'>" . $title . "</h1>
             <p class='mb-3 text-xs'>" . $formateDate . "</p>
-            <p class=' font-medium text-justify'>" . $content . "</p>
-        </div>";
+            <p class=' font-medium text-justify'>" . $content . '</p>
+            <div class="flex gap-3 border-t-2 border-neutral-900 mt-2 px-5 pt-1">
+                <div data-articleId="' . $id . '" data-isUserLogin="' . (isset($userId) ? "true" : "false") . '" class="likeButton cursor-pointer text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill=' . ($liked ? "currentColor" : "none") . ' stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="likesAmount">' . $likesAmount . '</p>
+                </div>
+            </div>
+        </div>';
     }
 }

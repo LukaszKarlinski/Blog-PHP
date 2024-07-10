@@ -1,24 +1,27 @@
+//get dom elements
 const showDeletePopupButtons = document.querySelectorAll('.showDeletePopup');
 const closeDeletePopupButtons = document.querySelectorAll('.closePopup');
 const deletePopup = document.querySelectorAll('.deletePopup');
 const deleteButtons = document.querySelectorAll('.deleteArticleButton');
 
+//handle showing popup
 showDeletePopupButtons.forEach((showPopupButton, index) =>{
     showPopupButton.addEventListener('click', ()=>{
         deletePopup[index].classList.remove('hidden');  
     });
 });
 
+//handle closing popup
 closeDeletePopupButtons.forEach((closeButton, index) =>{
     closeButton.addEventListener('click', ()=>{
         deletePopup[index].classList.add('hidden');
     });
 });
 
+//handle delete article
 deleteButtons.forEach(deleteButton =>{
     deleteButton.addEventListener('click', ()=>{
         const articleId = deleteButton.dataset.articleid;
-        console.log(articleId);
 
         const data = new URLSearchParams();
         data.append('articleId', articleId);

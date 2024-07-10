@@ -23,5 +23,6 @@
     </div>
 
     <script src='assets/js/deleteArticle.js'></script>
+    <script src='assets/js/like.js'></script>
 </body>
 </html>
