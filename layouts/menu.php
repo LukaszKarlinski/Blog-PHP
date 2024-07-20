@@ -8,7 +8,9 @@
                     echo '<li class="px-6 py-3 cursor-pointer"><a href="signUp.php">rejestracja</a></li>';
                 }
                 else{
-                    echo '<li class="px-6 py-3 cursor-pointer"><a href="userPanel.php">panel użytkownika</a></li>';
+                    if($_SESSION['role'] == 'admin'){
+                        echo '<li class="px-6 py-3 cursor-pointer"><a href="userPanel.php">panel administracyjny</a></li>';
+                    }
                     echo '<li class="px-6 py-3 cursor-pointer"><a href="includes/login/logoutHandle.php">wyloguj się</a></li>';
                 }
             ?>
