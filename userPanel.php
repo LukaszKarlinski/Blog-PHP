@@ -1,6 +1,7 @@
 <?php 
     require_once 'includes/configSession.php';
     require_once 'includes/addArticle/functions/checkErrorsAddArticle.php';
+    require_once 'includes/stats/getStats.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@
             <div>
                 <?php echo "<h1 class='text-4xl font-semibold'>Witaj " . $_SESSION['username'] . "!</h1>"; ?>
             </div>
-            <?php if($_SESSION['role'] === 'admin'){ ?>
+            <div class="flex gap-5">
                 <div class='w-1/2 bg-neutral-200 text-neutral-900 p-5 rounded-xl'>
                     <h2 class='uppercase font-bold'>dodaj nowy wpis</h2>
                     <div>
@@ -36,7 +37,26 @@
                         </form>
                     </div>
                 </div>
-            <?php }; ?>
+                <div class='w-1/2 px-5' >
+                    <h2 class="text-4xl font-bold uppercase tracking-wider text-center my-5">Statystyki</h2>
+                    <div class='flex justify-between text-2xl border-b-2 my-4'>
+                        <h3>Liczba użytkowników: </h3>
+                        <h3> <?php echo $usersCount ?></h3>
+                    </div>
+                    <div class='flex justify-between text-2xl border-b-2 my-4'>
+                        <h3>Liczba wszystkich polubień:</h3>
+                        <h3><?php echo $likesCount ?></h3>
+                    </div>
+                    <div class='flex flex-col justify-between text-2xl my-8'>
+                        <h3> Najpopularnieszy wpis: </h3>
+                        <div class='bg-neutral-200 text-neutral-900 my-8 px-5 py-2 rounded-xl w-fit'>
+                            <h3 class='my-2 text-xl font-semibold'><?php echo $post['title']; ?></h3>
+                            <h3 class='text-xl'> Polubienia: <?php echo $post['likesCount'] ?></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
